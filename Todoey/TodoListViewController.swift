@@ -9,16 +9,16 @@
 import UIKit
 
 class TodoListViewController: UITableViewController {
-    let itemArray = ["hi", "hello", "hey"]
+    var itemArray = ["hi", "hello", "hey"]
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
 
-//table view datasource methods
+//MARK - table view datasource methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return itemArray.count
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -26,9 +26,10 @@ class TodoListViewController: UITableViewController {
         cell.textLabel?.text = itemArray[indexPath.row]
         return cell
     }
+    // Table view Delegate methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       // print("you have selected\(itemArray[indexPath.row])")
+       //MARK - print("you have selected\(itemArray[indexPath.row])")
          
         if         tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark{
             tableView.cellForRow(at: indexPath)?.accessoryType = .none
@@ -39,6 +40,24 @@ class TodoListViewController: UITableViewController {
 
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
+    //MARK - Add new items
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        var  textField = UITextField()
+        let alert = UIAlertController(title: "Add new Todoey item", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Add item", style: .default) { (action) in
+            // what will happen when user presses uialert button
+           print("Success")
+            self.itemArray.append(textField.text!)
+            self.tableView.reloadData()
+            
+        }
+        alert.addAction(action)
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "add item"
+            textField = alertTextField
+           
+        }
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 
