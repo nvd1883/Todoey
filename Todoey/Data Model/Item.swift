@@ -2,13 +2,17 @@
 //  Item.swift
 //  Todoey
 //
-//  Created by Nived Pradeep on 22/11/18.
+//  Created by Nived Pradeep on 29/11/18.
 //  Copyright © 2018 Nived Pradeep. All rights reserved.
 //
 
 import Foundation
+import RealmSwift
 
-class Item : Encodable,Decodable{
-    var title : String = ""
-    var done : Bool = false
+class Item: Object {
+    @objc dynamic var title : String = ""
+    @objc dynamic var done : Bool = false
+   @objc dynamic var dateCreated : Date? 
+   var parentCategory = LinkingObjects(fromType: Category.self, property: "item")
 }
+ 
